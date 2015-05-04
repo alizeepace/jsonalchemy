@@ -21,249 +21,141 @@
 
 from __future__ import absolute_import
 
+import json
 import pytest
 
-from jsonalchemy.wrappers import (
-    JSONBase, Boolean, List, String, Object, Integer, Field
-)
+from datetime import datetime
+
+from jsonalchemy.utils import load_schema_from_url
+from jsonalchemy.wrappers import JSONDict, JSONList
+
+from jsonschema import SchemaError, ValidationError
+from jsonschema.exceptions import UnknownType
 
 from helpers import abs_path
 
 
-def test_forbiden_type_override():
-    with pytest.raises(RuntimeError) as excinfo:
-        class AlreadyRegisteredObject(JSONBase):
-            schema_type = 'object'
+def test_constructor():
+    """."""
+    assert JSONDict() == {}
+    assert JSONDict({}) == {}
+    assert JSONDict(None, {}) == {}
 
 
-def test_simple_string_wrapper():
-    """Test simple wrapping of String."""
-    author = Field(String)
-    ellis = author("Ellis, J")
-
-    assert ellis == 'Ellis, J'
-
-    clone_ellis = author(ellis)
-
-    assert clone_ellis == ellis
+def test_malformed_schema():
+    """Malformed schemas raise a ValueError on creation."""
+    with pytest.raises(ValueError):
+        schema = load_schema_from_url(abs_path('schemas/missing_bracket.json'))
 
 
-def test_simple_list_wrapper():
-    """Test simple wrapping of String."""
-    authors = Field(List, items=[String])
-    nobles = authors(["Ellis, J", "Higgs, P"])
+def test_invalid_type():
+    """Schemas with invalid types raise UnknownType on use."""
+    schema = load_schema_from_url(abs_path('schemas/invalid_type.json'))
+    invalid_data = {'my_field': 'test'}
 
-    assert len(nobles) == 2
-
-    tuple_nobles = authors(("Ellis, J", "Higgs, P"))
-    assert len(tuple_nobles) == 2
-
-    with pytest.raises(TypeError) as excinfo:
-        authors("Ellis, J")
-
-    assert "is not type of" in str(excinfo.value)
-
-def test_mixed_list_wrapper():
-    """Test simple wrapping of String."""
-    authors = Field(List)  # any type
-    mixed_nobels = authors(["Ellis, J", "Higgs, P", 42, {"this": "that"}])
-
-    assert len(mixed_nobels) == 4
-
-    mix_tuple_nobles = authors(("Ellis, J", "Higgs, P", 42, {"this": "that"}))
-    assert len(mix_tuple_nobles) == 4
-
-    with pytest.raises(TypeError) as excinfo:
-        authors("Ellis, J")
-
-    assert "is not type of" in str(excinfo.value)
-
-def test_simple_integer_wrapper():
-    """Test simple wrapping of String."""
-    identifier = Field(Integer)
-    my_id = identifier(1)
-
-    assert my_id > 0
-    assert my_id < 2
-    assert my_id <= 1
-    assert my_id >= 1
-    assert my_id == 1
-    assert my_id != 0
-
-    with pytest.raises(TypeError) as excinfo:
-        identifier("1")
-
-    assert "is not type of" in str(excinfo.value)
+    with pytest.raises(UnknownType):
+        data = JSONDict(invalid_data, schema)
 
 
-def test_simple_bool_wrapper():
-    """Test simple wrapping of Boolean."""
-    flag = Field(Boolean)
-    my_flag = flag(True)
-    assert my_flag
+def test_data_load():
+    """Wrappers can load data."""
+    schema = load_schema_from_url(abs_path('schemas/simple.json'))
+    valid_data = {'my_field': 'test'}
+    invalid_type_data = {'my_field': 1}
+    wrong_field_data = {'wrong_field': 'test'}
 
-    my_flag_is_down = flag(False)
-    assert not my_flag_is_down
+    data = JSONDict(valid_data, schema)
 
-    with pytest.raises(TypeError) as excinfo:
-        flag("True")
+    assert 'my_field' in data
+    assert set(data.keys()) == set(['my_field'])
+    assert data['my_field'] == valid_data['my_field']
 
-    with pytest.raises(TypeError) as excinfo:
-        flag(1)
+    with pytest.raises(ValidationError):
+        JSONDict(invalid_type_data, schema=schema)
 
-
-def test_simple_object_wrapper():
-    """Test simple wrapping of String."""
-    author = Field(Object)
-    ellis = author({
-        "full_name": "Ellis, John R."
-    })
-
-    assert ellis == {
-        "full_name": "Ellis, John R."
-    }
-
-    with pytest.raises(TypeError) as excinfo:
-        author("Ellis, John R.")
-
-    assert "is not type of" in str(excinfo.value)
+    with pytest.raises(ValidationError):
+        JSONDict(wrong_field_data, schema=schema)
 
 
-def test_wrapper_composability():
+def test_data_set():
+    """Wrappers can set data."""
+    schema = load_schema_from_url(abs_path('schemas/simple.json'))
 
-    class Record(Object):
-        identifier = Field(Integer)
-        title = Field(String)
-        keywords = Field(List)
+    empty_data = JSONDict(schema=schema)
+    empty_data['my_field'] = 'valid value'
+    assert empty_data['my_field'] == 'valid value'
 
-    record = Record({
+    with pytest.raises(ValidationError):
+        empty_data['my_field'] = 666
+    assert empty_data['my_field'] != 666
+
+
+def test_data_delete():
+    """Wrappers can delete data."""
+    schema = load_schema_from_url(abs_path('schemas/required_field.json'))
+
+    data = JSONDict({
         'identifier': 1,
-        'title': 'Test',
-        'keywords': ['foo', 'bar'],
-    })
+        'my_field': 'test'
+    }, schema=schema)
 
-    assert record.identifier == 1
-    assert record.title == 'Test'
-    assert record.keywords == ['foo', 'bar']
+    with pytest.raises(ValidationError):
+        del data['identifier']
+    assert 'identifier' in data
 
-    with pytest.raises(AttributeError) as excinfo:
-        getattr(record, 'not_existent_attribute')
-
-    with pytest.raises(Exception) as excinfo:
-        record = Record({
-            'not_in_schema': 'Any Value',
-        })
+    del data['my_field']
+    assert 'my_field' not in data
 
 
-def test_wrapper_recursive_composability():
+def test_data_rollback():
+    """Wrappers rollback invalid edits."""
+    schema = load_schema_from_url(abs_path('schemas/required_field.json'))
 
-    class Record(Object):
-        identifier = Field(Integer)
-        title = Field(String)
-        keywords = Field(List)
-
-        class Author(Object):
-            full_name = Field(String)
-
-        author = Field(Author)
-
-    record = Record({
+    data = JSONDict({
         'identifier': 1,
-        'title': 'Test',
-        'keywords': ['foo', 'bar'],
-        'author': {'full_name': 'Ellis, J'}
-    })
+    }, schema=schema)
 
-    assert record.identifier == 1
-    assert record.title == 'Test'
-    assert record.keywords == ['foo', 'bar']
-    assert record.author.full_name == 'Ellis, J'
-
-    with pytest.raises(AttributeError) as excinfo:
-        getattr(record.author, 'not_existent_attribute')
-
-    with pytest.raises(Exception) as excinfo:
-        record = Record({
-            'author': {'not_in_schema': 'Any Value'},
-        })
+    with pytest.raises(ValidationError):
+        data['my_field'] = 666
+    assert 'my_field' not in data
 
 
-def test_wrapper_composability():
+def test_list_wrapper():
+    """List wrapper works as if it were a list."""
+    schema = load_schema_from_url(abs_path('schemas/list.json'))
 
-    class Record(Object):
-        identifier = Field(Integer)
-        title = Field(String)
-        keywords = Field(List)
+    data = JSONList(['foo', 'bar'], schema=schema)
 
-        class Author(Object):
-            full_name = Field(String)
+    assert data[0] == 'foo'
+    assert len(data) == 2
+    assert data == ['foo', 'bar']
 
-        authors = Field(List, items=[Author])
-
-
-    record = Record({})
-    record.identifier = 2
-    assert record.identifier == 2
-    assert record.__storage__['identifier'] == 2
-
-    record = Record({
-        'identifier': 1,
-        'title': 'Test',
-        'keywords': ['foo', 'bar'],
-        'authors': [
-            {'full_name': 'Ellis, J'},
-            {'full_name': 'Higgs, P'},
-            {'full_name': 'Englert, F'},
-        ]
-    })
-
-    assert record.identifier == 1
-    assert record.title == 'Test'
-    assert record.keywords == ['foo', 'bar']
-    assert len(record.authors) == 3
-    assert record.authors[0].full_name == 'Ellis, J'
-    assert record.authors[2].full_name == 'Englert, F'
-
-    with pytest.raises(IndexError) as excinfo:
-        record.authors[3]
-
-    del record.authors[1]
-    assert len(record.authors) == 2
-    assert record.authors[1].full_name == 'Englert, F'
-
-    with pytest.raises(AttributeError) as excinfo:
-        getattr(record.authors[0], 'not_existent_attribute')
-
-    with pytest.raises(TypeError) as excinfo:
-        record.authors.append('Ellis, J')
-
-    # TODO splice
+    list_data = list(data)
+    assert len(list_data) == 2
 
 
-def test_tricky_keys():
+def test_complex_type_wrapping():
+    """Wrappers can be recursively composed."""
+    schema = load_schema_from_url(abs_path('schemas/complex.json'))
 
-    class Data(Object):
-        schema = Field(String)
-        data = Field(String)
+    data = JSONDict({
+        'authors': [{'family_name': 'Ellis'}]
+    }, schema=schema)
 
-    data = Data({'data': 'data', 'schema': 'schema'})
-
-    assert data['data'] == 'data'
-    assert data['schema'] == 'schema'
-
-    assert data.data['data'] == 'data'
-    assert data.data['schema'] == 'schema'
-
-    data = Data({})
-    data['data'] = 'foo'
-    data['schema'] = 'bar'
-
-    assert data['data'] == 'foo'
-    assert data['schema'] == 'bar'
+    assert data['authors'][0]['family_name'] == 'Ellis'
+    assert isinstance(data['authors'], JSONList)
 
 
-def test_schema_and_schema_url():
-    with pytest.raises(RuntimeError) as excinfo:
-        class TooManySchema(String):
-            __schema__ = { 'type': 'string' }
-            __schema_url__ = abs_path('schemas/compose/title.json')
+def test_wrapper_subclass():
+    """Subclassing a wrapper preserves its behavior."""
+    schema = load_schema_from_url(abs_path('schemas/complex.json'))
+
+    class Record(JSONDict):
+        pass
+
+    data = Record({
+        'authors': [{'family_name': 'Ellis'}]
+    }, schema=schema)
+
+    assert data['authors'][0]['family_name'] == 'Ellis'
+    assert isinstance(data['authors'], JSONList)

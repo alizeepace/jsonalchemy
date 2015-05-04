@@ -1,9 +1,0 @@
-{
-    "title": "Record with a title",
-    "type": "object",
-    "properties": {
-        "title": {
-            "$ref": "title.json#/#title"
-        }
-    }
-}

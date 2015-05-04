@@ -1,8 +1,8 @@
 {
-	"title": "Schema missing bracket",
-	"type": "object",
-	"properties": {
-		"my_field": {
-			"type": "string"
-		}
-}
+    "title": "Schema with a missing bracket",
+    "type": "object",
+    "properties": {
+        "my_field": {
+            "type": "string"
+         }
+    }
