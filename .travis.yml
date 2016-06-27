@@ -1,5 +1,5 @@
 # This file is part of JSONAlchemy.
-# Copyright (C) 2014 CERN.
+# Copyright (C) 2014, 2016 CERN.
 #
 # JSONAlchemy is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -29,9 +29,9 @@ python:
 #  - "3.4"
 
 install:
-  - pip install --upgrade pip  --use-mirrors
-  - pip install coveralls pep257 --use-mirrors
-  - pip install pytest pytest-pep8 pytest-cov pytest-cache --use-mirrors
+  - pip install --upgrade pip
+  - pip install coveralls pydocstyle
+  - pip install pytest pytest-pep8 pytest-cov pytest-cache
   - pip install -e .[docs]
 
 script:

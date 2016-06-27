@@ -28,7 +28,7 @@ RUN pip install cerberus \
                 coveralls \
                 ipython \
                 lxml \
-                pep257 \
+                pydocstyle \
                 pyparsing==2.0.1 \
                 pytest \
                 pytest-cache \
