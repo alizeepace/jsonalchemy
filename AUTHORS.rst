@@ -24,10 +24,10 @@ Authors
 =======
 
 JSONAlchemy is developed for the `Invenio
-<http://invenio-software.org>`_ digital library software.
+<http://inveniosoftware.org>`_ digital library software.
 
-Contact us at `info@invenio-software.org
-<mailto:info@invenio-software.org>`_.
+Contact us at `info@inveniosoftware.org
+<mailto:info@inveniosoftware.org>`_.
 
 - Esteban J. G. Gabancho <esteban.jose.garcia.gabancho@cern.ch>
 - Jiri Kuncar <jiri.kuncar@cern.ch>

@@ -77,7 +77,7 @@ setup(
     url='https://github.com/inveniosoftware/jsonalchemy',
     license='GPLv2',
     author='Invenio collaboration',
-    author_email='info@invenio-software.org',
+    author_email='info@inveniosoftware.org',
     description=__doc__.split('\n')[0],
     long_description=__doc__,
     packages=find_packages(exclude=['tests', 'docs']),

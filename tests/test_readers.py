@@ -164,11 +164,11 @@ class TestMarcReader(TestCase):
                 <subfield code="f">neil.calder@cern.ch</subfield>
                 </datafield>
                 <datafield tag="FFT" ind1=" " ind2=" ">
-                <subfield code="a">http://invenio-software.org/download/invenio-demo-site-files/0106015_01.jpg</subfield>
+                <subfield code="a">http://inveniosoftware.org/download/invenio-demo-site-files/0106015_01.jpg</subfield>
                 <subfield code="r">restricted_picture</subfield>
                 </datafield>
                 <datafield tag="FFT" ind1=" " ind2=" ">
-                <subfield code="a">http://invenio-software.org/download/invenio-demo-site-files/0106015_01.gif</subfield>
+                <subfield code="a">http://inveniosoftware.org/download/invenio-demo-site-files/0106015_01.gif</subfield>
                 <subfield code="f">.gif;icon</subfield>
                 <subfield code="r">restricted_picture</subfield>
                 </datafield>
@@ -263,26 +263,26 @@ class TestMarcReader(TestCase):
                 <subfield code="f">George Efstathiou &lt;gpe@ast.cam.ac.uk&gt;</subfield>
                 </datafield>
                 <datafield tag="FFT" ind1=" " ind2=" ">
-                <subfield code="a">http://invenio-software.org/download/invenio-demo-site-files/9812226.pdf</subfield>
+                <subfield code="a">http://inveniosoftware.org/download/invenio-demo-site-files/9812226.pdf</subfield>
                 </datafield>
                 <datafield tag="FFT" ind1=" " ind2=" ">
-                <subfield code="a">http://invenio-software.org/download/invenio-demo-site-files/9812226.fig1.ps.gz</subfield>
+                <subfield code="a">http://inveniosoftware.org/download/invenio-demo-site-files/9812226.fig1.ps.gz</subfield>
                 <subfield code="t">Additional</subfield>
                 </datafield>
                 <datafield tag="FFT" ind1=" " ind2=" ">
-                <subfield code="a">http://invenio-software.org/download/invenio-demo-site-files/9812226.fig3.ps.gz</subfield>
+                <subfield code="a">http://inveniosoftware.org/download/invenio-demo-site-files/9812226.fig3.ps.gz</subfield>
                 <subfield code="t">Additional</subfield>
                 </datafield>
                 <datafield tag="FFT" ind1=" " ind2=" ">
-                <subfield code="a">http://invenio-software.org/download/invenio-demo-site-files/9812226.fig5.ps.gz</subfield>
+                <subfield code="a">http://inveniosoftware.org/download/invenio-demo-site-files/9812226.fig5.ps.gz</subfield>
                 <subfield code="t">Additional</subfield>
                 </datafield>
                 <datafield tag="FFT" ind1=" " ind2=" ">
-                <subfield code="a">http://invenio-software.org/download/invenio-demo-site-files/9812226.fig6.ps.gz</subfield>
+                <subfield code="a">http://inveniosoftware.org/download/invenio-demo-site-files/9812226.fig6.ps.gz</subfield>
                 <subfield code="t">Additional</subfield>
                 </datafield>
                 <datafield tag="FFT" ind1=" " ind2=" ">
-                <subfield code="a">http://invenio-software.org/download/invenio-demo-site-files/9812226.fig7.ps.gz</subfield>
+                <subfield code="a">http://inveniosoftware.org/download/invenio-demo-site-files/9812226.fig7.ps.gz</subfield>
                 <subfield code="t">Additional</subfield>
                 </datafield>
                 <datafield tag="909" ind1="C" ind2="0">
@@ -612,26 +612,26 @@ class TestMarcReader(TestCase):
                 <subfield code="f">George Efstathiou &lt;gpe@ast.cam.ac.uk&gt;</subfield>
                 </datafield>
                 <datafield tag="FFT" ind1=" " ind2=" ">
-                <subfield code="a">http://invenio-software.org/download/invenio-demo-site-files/9812226.pdf</subfield>
+                <subfield code="a">http://inveniosoftware.org/download/invenio-demo-site-files/9812226.pdf</subfield>
                 </datafield>
                 <datafield tag="FFT" ind1=" " ind2=" ">
-                <subfield code="a">http://invenio-software.org/download/invenio-demo-site-files/9812226.fig1.ps.gz</subfield>
+                <subfield code="a">http://inveniosoftware.org/download/invenio-demo-site-files/9812226.fig1.ps.gz</subfield>
                 <subfield code="t">Additional</subfield>
                 </datafield>
                 <datafield tag="FFT" ind1=" " ind2=" ">
-                <subfield code="a">http://invenio-software.org/download/invenio-demo-site-files/9812226.fig3.ps.gz</subfield>
+                <subfield code="a">http://inveniosoftware.org/download/invenio-demo-site-files/9812226.fig3.ps.gz</subfield>
                 <subfield code="t">Additional</subfield>
                 </datafield>
                 <datafield tag="FFT" ind1=" " ind2=" ">
-                <subfield code="a">http://invenio-software.org/download/invenio-demo-site-files/9812226.fig5.ps.gz</subfield>
+                <subfield code="a">http://inveniosoftware.org/download/invenio-demo-site-files/9812226.fig5.ps.gz</subfield>
                 <subfield code="t">Additional</subfield>
                 </datafield>
                 <datafield tag="FFT" ind1=" " ind2=" ">
-                <subfield code="a">http://invenio-software.org/download/invenio-demo-site-files/9812226.fig6.ps.gz</subfield>
+                <subfield code="a">http://inveniosoftware.org/download/invenio-demo-site-files/9812226.fig6.ps.gz</subfield>
                 <subfield code="t">Additional</subfield>
                 </datafield>
                 <datafield tag="FFT" ind1=" " ind2=" ">
-                <subfield code="a">http://invenio-software.org/download/invenio-demo-site-files/9812226.fig7.ps.gz</subfield>
+                <subfield code="a">http://inveniosoftware.org/download/invenio-demo-site-files/9812226.fig7.ps.gz</subfield>
                 <subfield code="t">Additional</subfield>
                 </datafield>
                 <datafield tag="909" ind1="C" ind2="0">
@@ -1001,11 +1001,11 @@ class TestMarcReader(TestCase):
               <subfield code="f">neil.calder@cern.ch</subfield>
             </datafield>
             <datafield tag="FFT" ind1=" " ind2=" ">
-              <subfield code="a">http://invenio-software.org/download/invenio-demo-site-files/0106015_01.jpg</subfield>
+              <subfield code="a">http://inveniosoftware.org/download/invenio-demo-site-files/0106015_01.jpg</subfield>
               <subfield code="r">restricted_picture</subfield>
             </datafield>
             <datafield tag="FFT" ind1=" " ind2=" ">
-              <subfield code="a">http://invenio-software.org/download/invenio-demo-site-files/0106015_01.gif</subfield>
+              <subfield code="a">http://inveniosoftware.org/download/invenio-demo-site-files/0106015_01.gif</subfield>
               <subfield code="f">.gif;icon</subfield>
               <subfield code="r">restricted_picture</subfield>
             </datafield>
@@ -1090,11 +1090,11 @@ class TestMarcReader(TestCase):
               <subfield code="f">neil.calder@cern.ch</subfield>
             </datafield>
             <datafield tag="FFT" ind1=" " ind2=" ">
-              <subfield code="a">http://invenio-software.org/download/invenio-demo-site-files/0106015_01.jpg</subfield>
+              <subfield code="a">http://inveniosoftware.org/download/invenio-demo-site-files/0106015_01.jpg</subfield>
               <subfield code="r">restricted_picture</subfield>
             </datafield>
             <datafield tag="FFT" ind1=" " ind2=" ">
-              <subfield code="a">http://invenio-software.org/download/invenio-demo-site-files/0106015_01.gif</subfield>
+              <subfield code="a">http://inveniosoftware.org/download/invenio-demo-site-files/0106015_01.gif</subfield>
               <subfield code="f">.gif;icon</subfield>
               <subfield code="r">restricted_picture</subfield>
             </datafield>
@@ -1181,11 +1181,11 @@ class TestMarcReader(TestCase):
               <subfield code="f">neil.calder@cern.ch</subfield>
             </datafield>
             <datafield tag="FFT" ind1=" " ind2=" ">
-              <subfield code="a">http://invenio-software.org/download/invenio-demo-site-files/0106015_01.jpg</subfield>
+              <subfield code="a">http://inveniosoftware.org/download/invenio-demo-site-files/0106015_01.jpg</subfield>
               <subfield code="r">restricted_picture</subfield>
             </datafield>
             <datafield tag="FFT" ind1=" " ind2=" ">
-              <subfield code="a">http://invenio-software.org/download/invenio-demo-site-files/0106015_01.gif</subfield>
+              <subfield code="a">http://inveniosoftware.org/download/invenio-demo-site-files/0106015_01.gif</subfield>
               <subfield code="f">.gif;icon</subfield>
               <subfield code="r">restricted_picture</subfield>
             </datafield>
